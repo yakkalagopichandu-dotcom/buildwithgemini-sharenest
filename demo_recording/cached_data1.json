@@ -1,0 +1,102 @@
+{
+  "parts": [
+    {
+      "kind": "a2ui",
+      "data": {
+        "beginRendering": {
+          "surfaceId": "food-listings-surface",
+          "root": "root-card"
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "surfaceUpdate": {
+          "surfaceId": "food-listings-surface",
+          "components": [
+            {
+              "id": "root-card",
+              "component": {
+                "Card": {
+                  "child": "main-col"
+                }
+              }
+            },
+            {
+              "id": "main-col",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "title-text",
+                      "sub-text",
+                      "item-1",
+                      "item-2",
+                      "item-3"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "title-text",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Available Food Rescue Listings"
+                  },
+                  "usageHint": "h2"
+                }
+              }
+            },
+            {
+              "id": "sub-text",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Active listings available for immediate shelter & volunteer pickup:"
+                  },
+                  "usageHint": "caption"
+                }
+              }
+            },
+            {
+              "id": "item-1",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "\u2022 [ID: donation-3c46a6] Hyderabad (Banjara Hills): 10 kg Fresh Cooked Rice by Priya. Pickup: Today until 8:00 PM (Urgent)."
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "item-2",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "\u2022 [ID: donation-f6afca] Hyderabad (Hydernagar): 50 Fresh Cooked Vegetarian Meal Packages by Gopi Chandu. Pickup: Today around 8:00 PM (Urgent)."
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "item-3",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "\u2022 [ID: donation-001] Bengaluru (Koramangala): 40 packed meals (Roti, Dal & Paneer) by Annapurna Kitchen. Pickup: Today, 4:00 PM - 7:00 PM (Urgent)."
+                  },
+                  "usageHint": "body"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

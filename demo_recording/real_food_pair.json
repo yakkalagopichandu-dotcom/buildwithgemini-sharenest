@@ -1,0 +1,126 @@
+{
+  "parts": [
+    {
+      "kind": "a2ui",
+      "data": {
+        "beginRendering": {
+          "surfaceId": "hyd-food-donations",
+          "root": "root-card"
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "surfaceUpdate": {
+          "surfaceId": "hyd-food-donations",
+          "components": [
+            {
+              "id": "root-card",
+              "component": {
+                "Card": {
+                  "child": "main-col"
+                }
+              }
+            },
+            {
+              "id": "main-col",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "header-text",
+                      "item1-title",
+                      "item1-details",
+                      "item2-title",
+                      "item2-details",
+                      "item3-title",
+                      "item3-details"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "header-text",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Available Food Rescue Listings in Hyderabad"
+                  },
+                  "usageHint": "h2"
+                }
+              }
+            },
+            {
+              "id": "item1-title",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "1. 50 Freshly Cooked Vegetarian Meal Packages [Urgent]"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "item1-details",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "ID: donation-f6afca | Location: Hydernagar | Donor: Gopi Chandu Yakkala | Pickup: Today around 8:00 PM | Quantity: 50 meal packages"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "item2-title",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "2. 10 kg Fresh Rice and Curry [Urgent]"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "item2-details",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "ID: donation-22a9a9 | Location: Banjara Hills | Donor: Priya | Pickup: Until 8:00 PM today | Quantity: 10 kg"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "item3-title",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "3. 10 kg Fresh Cooked Rice [Urgent]"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "item3-details",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "ID: donation-3c46a6 | Location: Banjara Hills | Donor: Priya | Pickup: Today until 8:00 PM | Quantity: 10 kg"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

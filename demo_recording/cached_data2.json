@@ -1,0 +1,102 @@
+{
+  "parts": [
+    {
+      "kind": "a2ui",
+      "data": {
+        "beginRendering": {
+          "surfaceId": "nearby-centers-surface",
+          "root": "root-card"
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "surfaceUpdate": {
+          "surfaceId": "nearby-centers-surface",
+          "components": [
+            {
+              "id": "root-card",
+              "component": {
+                "Card": {
+                  "child": "main-col"
+                }
+              }
+            },
+            {
+              "id": "main-col",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "title-text",
+                      "sub-text",
+                      "center-1",
+                      "center-2",
+                      "center-3"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "title-text",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Verified Community Distribution Centers"
+                  },
+                  "usageHint": "h2"
+                }
+              }
+            },
+            {
+              "id": "sub-text",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Top drop-off points & food distribution shelters in Hyderabad:"
+                  },
+                  "usageHint": "caption"
+                }
+              }
+            },
+            {
+              "id": "center-1",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "\ud83d\udccd Hyderabad Food Rescue Hub \u2014 Banjara Hills, Hyderabad (Rating: 4.8 \u2605, Open until 9:00 PM)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "center-2",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "\ud83d\udccd Annapurna Community Feeding Center \u2014 Nampally, Hyderabad (Rating: 4.9 \u2605, Open 24/7)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "center-3",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "\ud83d\udccd Hope Community Relief Shelter \u2014 Secunderabad, Hyderabad (Rating: 4.7 \u2605, Open until 8:00 PM)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

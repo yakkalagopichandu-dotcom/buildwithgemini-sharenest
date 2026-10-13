@@ -1,0 +1,77 @@
+{
+  "parts": [
+    {
+      "kind": "a2ui",
+      "data": {
+        "beginRendering": {
+          "surfaceId": "item-preview-surface",
+          "root": "preview-card"
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "surfaceUpdate": {
+          "surfaceId": "item-preview-surface",
+          "components": [
+            {
+              "id": "preview-card",
+              "component": {
+                "Card": {
+                  "child": "preview-col"
+                }
+              }
+            },
+            {
+              "id": "preview-col",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "prev-title",
+                      "prev-img",
+                      "prev-desc"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "prev-title",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Visual Verification for Listing donation-3c46a6"
+                  },
+                  "usageHint": "h2"
+                }
+              }
+            },
+            {
+              "id": "prev-img",
+              "component": {
+                "Image": {
+                  "url": {
+                    "literalString": "https://storage.googleapis.com/sharenest-donations-qwiklabs-04-f3ca/donations/item_efd09f02.jpg"
+                  }
+                }
+              }
+            },
+            {
+              "id": "prev-desc",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Fresh cooked rice meal packed in hygienic stainless steel food grade containers at Banjara Hills, Hyderabad. Verified by ShareNest."
+                  },
+                  "usageHint": "body"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

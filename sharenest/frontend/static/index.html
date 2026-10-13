@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareNest — Community Donation Assistant</title>
+<!-- Google Material Symbols Outlined -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+<style>
+  :root { 
+    --accent:#0d9488; 
+    --accent-hover:#0f766e; 
+    --accent-light:#f0fdfa;
+    --accent-soft:#ccfbf1;
+    --bg:#f8fafc; 
+    --card-bg:#ffffff;
+    --border:#e2e8f0; 
+    --text-primary:#0f172a;
+    --text-secondary:#64748b;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  }
+  * { box-sizing:border-box; }
+  body { 
+    margin:0; 
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; 
+    background:var(--bg); 
+    display:flex; 
+    flex-direction:column; 
+    height:100vh; 
+    color:var(--text-primary);
+  }
+  header { 
+    background:var(--accent); 
+    color:#fff; 
+    padding:0.75rem 1.25rem; 
+    box-shadow:0 2px 8px rgba(13,148,136,0.2); 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between;
+    z-index:10;
+  }
+  .header-left { display:flex; align-items:center; gap:.75rem; }
+  .header-title { font-weight:700; font-size:1.15rem; letter-spacing:-0.01em; }
+  .header-badge { font-size:0.75rem; background:rgba(255,255,255,0.22); padding:0.2rem 0.6rem; border-radius:9999px; font-weight:500; }
+  .header-right { display:flex; align-items:center; gap:0.5rem; }
+  .header-action-btn { 
+    background:rgba(255,255,255,0.18); 
+    color:#fff; 
+    border:1px solid rgba(255,255,255,0.3); 
+    padding:0.35rem 0.75rem; 
+    border-radius:8px; 
+    font-size:0.8rem; 
+    font-weight:600; 
+    cursor:pointer; 
+    display:inline-flex; 
+    align-items:center; 
+    gap:0.3rem; 
+    transition:background .15s ease; 
+  }
+  .header-action-btn:hover { background:rgba(255,255,255,0.28); }
+  
+  /* Category bar */
+  .category-bar {
+    display:flex;
+    gap:0.4rem;
+    padding:0.5rem 1rem;
+    background:#ffffff;
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+    align-items:center;
+  }
+  .category-label {
+    font-size:0.78rem;
+    font-weight:600;
+    color:var(--text-secondary);
+    text-transform:uppercase;
+    margin-right:0.25rem;
+    white-space:nowrap;
+  }
+  .category-pill {
+    background:#f1f5f9;
+    border:1px solid #cbd5e1;
+    color:#334155;
+    padding:0.3rem 0.75rem;
+    border-radius:9999px;
+    font-size:0.8rem;
+    font-weight:500;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  .category-pill:hover {
+    background:var(--accent-light);
+    border-color:var(--accent);
+    color:var(--accent-hover);
+    transform:translateY(-1px);
+  }
+
+  #log { 
+    flex:1; 
+    overflow-y:auto; 
+    padding:1.25rem 1rem; 
+    max-width:840px; 
+    width:100%; 
+    margin:0 auto; 
+    display:flex; 
+    flex-direction:column; 
+    gap:1.25rem; 
+  }
+  
+  /* Dialogue row styling */
+  .msg-row { display:flex; gap:0.75rem; width:100%; align-items:flex-start; animation:fadeIn 0.2s ease-out; }
+  .msg-row.user { flex-direction:row-reverse; }
+  
+  .avatar { 
+    width:38px; 
+    height:38px; 
+    border-radius:50%; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    flex-shrink:0; 
+    box-shadow:var(--shadow-sm); 
+    overflow:hidden;
+  }
+  .avatar svg { width:24px; height:24px; display:block; }
+  .avatar.agent { 
+    background: linear-gradient(135deg, #0d9488 0%, #115e59 100%); 
+    color:#fff; 
+    border:2px solid #ccfbf1;
+  }
+  .avatar.user { 
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
+    color:#fff; 
+    border:2px solid #dbeafe;
+  }
+
+
+  .msg-content-wrapper { display:flex; flex-direction:column; max-width:85%; }
+  .msg-row.user .msg-content-wrapper { align-items:flex-end; }
+  
+  .msg-header { font-size:0.75rem; color:var(--text-secondary); margin-bottom:0.25rem; display:flex; gap:0.5rem; align-items:center; }
+  .msg-row.user .msg-header { flex-direction:row-reverse; }
+  
+  .bubble { 
+    padding:0.75rem 1rem; 
+    border-radius:14px; 
+    background:var(--card-bg); 
+    border:1px solid var(--border); 
+    text-align:left; 
+    line-height:1.5; 
+    font-size:0.95rem; 
+    box-shadow:var(--shadow-sm); 
+  }
+  .msg-row.user .bubble { 
+    background:var(--accent); 
+    color:#fff; 
+    border:none; 
+    border-bottom-right-radius:4px; 
+    box-shadow:0 2px 4px rgba(13,148,136,0.25); 
+  }
+  .msg-row.agent .bubble { 
+    border-bottom-left-radius:4px; 
+  }
+  
+  /* When the reply is an A2UI card, drop the bubble chrome */
+  .bubble.rich { background:transparent; border:none; padding:0; max-width:100%; box-shadow:none; }
+  
+  /* Prompt chips */
+  .prompts-container { 
+    display:flex; 
+    gap:.5rem; 
+    padding:.6rem 1.25rem 0.2rem; 
+    background:#fff; 
+    overflow-x:auto; 
+    flex-wrap:wrap; 
+    border-top:1px solid var(--border); 
+    max-width:840px; 
+    width:100%; 
+    margin:0 auto; 
+  }
+  .prompt-chip { 
+    background:var(--accent-light); 
+    border:1px solid var(--accent-soft); 
+    color:#0f766e; 
+    padding:.45rem .85rem; 
+    border-radius:9999px; 
+    font-size:.82rem; 
+    font-weight:500; 
+    cursor:pointer; 
+    display:inline-flex; 
+    align-items:center; 
+    gap:.4rem; 
+    transition:all .15s ease; 
+    white-space:nowrap; 
+  }
+  .prompt-chip:hover { 
+    background:#ccfbf1; 
+    border-color:#99f6e4; 
+    color:#115e59; 
+    transform:translateY(-1px); 
+    box-shadow:var(--shadow-sm); 
+  }
+  .prompt-chip .material-symbols-outlined { font-size:1rem; color:var(--accent); }
+  
+  .input-area-wrapper {
+    background:#fff;
+    border-top:1px solid var(--border);
+    box-shadow:0 -2px 10px rgba(0,0,0,0.03);
+  }
+  form { 
+    display:flex; 
+    gap:.6rem; 
+    padding:.75rem 1.25rem 1rem; 
+    max-width:840px; 
+    width:100%; 
+    margin:0 auto; 
+  }
+  input { 
+    flex:1; 
+    padding:.75rem 1rem; 
+    border:1.5px solid var(--border); 
+    border-radius:10px; 
+    font-size:0.95rem; 
+    outline-color:var(--accent); 
+    transition:border-color 0.15s ease; 
+  }
+  input:focus { border-color:var(--accent); }
+  button.send-btn { 
+    padding:.75rem 1.4rem; 
+    border:none; 
+    border-radius:10px; 
+    background:var(--accent); 
+    color:#fff; 
+    font-weight:600; 
+    font-size:0.95rem; 
+    cursor:pointer; 
+    transition:background .15s ease, transform .1s active; 
+    display:inline-flex; 
+    align-items:center; 
+    gap:0.4rem; 
+  }
+  button.send-btn:hover { background:var(--accent-hover); }
+  button.send-btn:active { transform:scale(0.98); }
+
+  /* Typing bouncing wave animation */
+  .typing-indicator {
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:0.25rem 0.5rem;
+  }
+  .typing-dot {
+    width:7px;
+    height:7px;
+    background:var(--accent);
+    border-radius:50%;
+    animation:typingBounce 1.3s infinite ease-in-out;
+  }
+  .typing-dot:nth-child(1) { animation-delay: 0s; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* --- A2UI component styles (Card, Column, Row, Text, Divider, List, Image, Icon) --- */
+  .a2card { 
+    border:1px solid var(--border); 
+    border-radius:14px; 
+    padding:1.1rem; 
+    background:#fff; 
+    box-shadow:var(--shadow-md); 
+    max-width:100%; 
+    transition:transform 0.15s ease;
+  }
+  .a2card + .a2card, .a2col > .a2card { margin-top:.75rem; }
+  .a2col { display:flex; flex-direction:column; gap:.45rem; }
+  .a2row { display:flex; flex-direction:row; gap:.6rem; align-items:center; flex-wrap:wrap; }
+  .a2row.between { justify-content:space-between; }
+  .a2text { margin:0; line-height:1.45; }
+  .a2text.a2-h1 { font-size:1.4rem; font-weight:700; color:#0f172a; }
+  .a2text.a2-h2 { font-size:1.2rem; font-weight:700; color:#0f172a; }
+  .a2text.a2-h3 { font-size:1.05rem; font-weight:600; color:#0f172a; }
+  .a2text.a2-h4 { font-size:0.95rem; font-weight:600; color:#0f172a; }
+  .a2text.a2-caption { font-size:.82rem; color:#64748b; }
+  .a2divider { border:none; border-top:1px solid var(--border); margin:.5rem 0; width:100%; }
+  .a2img { max-width:100%; border-radius:10px; display:block; box-shadow:var(--shadow-sm); }
+  .material-symbols-outlined { font-family:Material Symbols Outlined; font-size:1.25rem; line-height:1; vertical-align:middle; color:var(--accent); }
+
+  /* Urgency badge pills */
+  .urgency-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:0.3rem;
+    padding:0.2rem 0.6rem;
+    border-radius:9999px;
+    font-size:0.75rem;
+    font-weight:600;
+  }
+  .urgency-badge.urgent { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; }
+  .urgency-badge.available { background:#dcfce7; color:#166534; border:1px solid #bbf7d0; }
+  .urgency-badge.info { background:#e0f2fe; color:#075985; border:1px solid #bae6fd; }
+
+  /* Card Action Buttons */
+  .card-action-bar {
+    display:flex;
+    gap:0.5rem;
+    margin-top:0.6rem;
+    flex-wrap:wrap;
+  }
+  .card-action-btn {
+    background:#f8fafc;
+    border:1px solid var(--border);
+    color:var(--text-primary);
+    padding:0.35rem 0.75rem;
+    border-radius:8px;
+    font-size:0.8rem;
+    font-weight:600;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:0.35rem;
+    transition:all 0.15s ease;
+  }
+  .card-action-btn:hover {
+    background:var(--accent-light);
+    border-color:var(--accent);
+    color:var(--accent);
+  }
+  .card-action-btn .material-symbols-outlined { font-size:1rem; }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(4px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <span class="material-symbols-outlined" style="color:#fff;font-size:1.6rem;">volunteer_activism</span>
+    <span class="header-title">ShareNest</span>
+    <span class="header-badge">Community Care</span>
+  </div>
+  <div class="header-right">
+    <button type="button" class="header-action-btn" id="new-session-btn" title="Start a fresh conversation">
+      <span class="material-symbols-outlined" style="font-size:1rem;color:#fff;">refresh</span>
+      New Session
+    </button>
+  </div>
+</header>
+
+<div class="category-bar">
+  <span class="category-label">Quick Filters:</span>
+  <button type="button" class="category-pill" data-prompt="Show available food rescue listings">
+    🍲 Food
+  </button>
+  <button type="button" class="category-pill" data-prompt="Show available clothing and apparel donations">
+    👕 Clothes
+  </button>
+  <button type="button" class="category-pill" data-prompt="Show available toys and books donations">
+    🧸 Toys
+  </button>
+  <button type="button" class="category-pill" data-prompt="Show essential household and hygiene items">
+    📦 Essentials
+  </button>
+  <button type="button" class="category-pill" data-prompt="Find food banks or community centers near Hyderabad">
+    📍 Nearby Centers
+  </button>
+</div>
+
+<div id="log">
+  <div class="msg-row agent">
+    <div class="avatar agent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5v6"/><path d="M9 8h6"/></svg>
+    </div>
+    <div class="msg-content-wrapper">
+
+      <div class="msg-header">
+        <span>ShareNest</span>
+        <span>•</span>
+        <span>Just now</span>
+      </div>
+      <div class="bubble">
+        Hello! I am <strong>ShareNest</strong>, your community donation assistant. I help donors list surplus food, clothing, toys, and essentials, and help shelters and volunteers claim items for pickup across India. How can I help you today?
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="input-area-wrapper">
+  <div class="prompts-container" id="example-prompts">
+    <button type="button" class="prompt-chip" data-prompt="Show available food and clothing donations">
+      <span class="material-symbols-outlined">search</span>Show available food & clothes
+    </button>
+    <button type="button" class="prompt-chip" data-prompt="Find food banks or community centers near Hyderabad">
+      <span class="material-symbols-outlined">location_on</span>Find nearby centers in Hyderabad
+    </button>
+    <button type="button" class="prompt-chip" data-prompt="What is the environmental and meal impact of rescuing 20 kg of surplus food?">
+      <span class="material-symbols-outlined">eco</span>Calculate impact of 20kg food rescue
+    </button>
+  </div>
+
+  <form id="form">
+    <input id="input" placeholder="Ask ShareNest about donations, food claims, nearby centers…" autocomplete="off" autofocus>
+    <button class="send-btn">
+      <span>Send</span>
+      <span class="material-symbols-outlined" style="font-size:1.1rem;color:#fff;">send</span>
+    </button>
+  </form>
+</div>
+
+<script>
+let currentUserId = "sharenest-" + Math.random().toString(36).substring(2, 9);
+const log = document.getElementById("log");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function getTimeStr() {
+  const d = new Date();
+  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+const AGENT_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5v6"/><path d="M9 8h6"/></svg>`;
+const USER_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+
+function bubble(who) {
+  const row = el("div", "msg-row " + who);
+  
+  const avatar = el("div", "avatar " + who);
+  avatar.innerHTML = who === "user" ? USER_ICON_SVG : AGENT_ICON_SVG;
+  row.appendChild(avatar);
+
+  const wrapper = el("div", "msg-content-wrapper");
+
+  
+  const header = el("div", "msg-header");
+  const authorSpan = el("span", null, who === "user" ? "You" : "ShareNest");
+  const dotSpan = el("span", null, "•");
+  const timeSpan = el("span", null, getTimeStr());
+  header.appendChild(authorSpan);
+  header.appendChild(dotSpan);
+  header.appendChild(timeSpan);
+  wrapper.appendChild(header);
+
+  const b = el("div", "bubble");
+  wrapper.appendChild(b);
+
+  row.appendChild(wrapper);
+  log.appendChild(row);
+  log.scrollTop = log.scrollHeight;
+  return b;
+}
+
+// Typing indicator bubble with optional status hint
+function showTypingBubble(hint) {
+  const b = bubble("agent");
+  const wrapper = el("div", null);
+  wrapper.style.display = "flex";
+  wrapper.style.alignItems = "center";
+  wrapper.style.gap = "0.5rem";
+
+  const typing = el("div", "typing-indicator");
+  typing.appendChild(el("div", "typing-dot"));
+  typing.appendChild(el("div", "typing-dot"));
+  typing.appendChild(el("div", "typing-dot"));
+  wrapper.appendChild(typing);
+
+  if (hint) {
+    const hintSpan = el("span", null, hint);
+    hintSpan.style.fontSize = "0.82rem";
+    hintSpan.style.color = "var(--text-secondary)";
+    wrapper.appendChild(hintSpan);
+  }
+
+  b.appendChild(wrapper);
+  return b;
+}
+
+
+// Simple Markdown Formatter for plain text responses
+function formatMarkdown(text) {
+  if (!text) return "";
+  let html = text
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/`([^`]+)`/g, "<code style='background:#f1f5f9;padding:2px 4px;border-radius:4px;font-size:0.88em;'>$1</code>")
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, "<a href='$2' target='_blank' rel='noopener' style='color:var(--accent);text-decoration:underline;'>$1</a>");
+
+  const lines = html.split("\n");
+  let inList = false;
+  let formatted = [];
+  for (let line of lines) {
+    if (/^\s*[\*\-]\s+(.*)/.test(line)) {
+      if (!inList) { formatted.push("<ul style='margin:0.4rem 0;padding-left:1.4rem;'>"); inList = true; }
+      formatted.push("<li>" + line.replace(/^\s*[\*\-]\s+/, "") + "</li>");
+    } else {
+      if (inList) { formatted.push("</ul>"); inList = false; }
+      formatted.push(line ? `<p style='margin:0.35rem 0;'>${line}</p>` : "<div style='height:0.35rem;'></div>");
+    }
+  }
+  if (inList) formatted.push("</ul>");
+  return formatted.join("");
+}
+
+
+/* ----------------------------------------------------------------------------
+ * A2UI mini-renderer (v0.8 Basic Catalog subset).
+ * Renders Card / Column / Row / Text / Divider / List / Image / Icon.
+ * -------------------------------------------------------------------------- */
+function boundStr(v) {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v.literalString === "string") return v.literalString;
+  return "";
+}
+
+function childIds(props) {
+  const ids = [];
+  if (props && typeof props.child === "string") ids.push(props.child);
+  const ch = props && props.children;
+  if (ch && Array.isArray(ch.explicitList)) for (const c of ch.explicitList) if (typeof c === "string") ids.push(c);
+  return ids;
+}
+
+function iconName(n) { return String(n || "").replace(/([a-z0-9])([A-Z])/g, "$1_$2").replace(/\s+/g, "_").toLowerCase(); }
+
+function buildNode(id, comps, seen) {
+  if (!id || seen.has(id)) return null;
+  seen.add(id);
+  const spec = comps[id];
+  if (!spec || typeof spec !== "object") return null;
+  const type = Object.keys(spec)[0];
+  const props = spec[type] || {};
+  const kids = () => childIds(props).map(cid => buildNode(cid, comps, seen)).filter(Boolean);
+
+  switch (type) {
+    case "Card": {
+      const d = el("div", "a2card"); 
+      kids().forEach(n => d.appendChild(n)); 
+      
+      const textContent = d.textContent;
+      const actions = el("div", "card-action-bar");
+      
+      // Pinpoint Google Maps location: extract exact venue / address if available
+      if (textContent.includes("Hyderabad") || textContent.includes("Telangana") || textContent.includes("Bhavan") || textContent.includes("Mandal") || textContent.includes("Bengaluru") || textContent.includes("Chennai") || textContent.includes("Mumbai") || textContent.includes("Delhi")) {
+        const mapsBtn = el("button", "card-action-btn", "Open in Google Maps");
+        const mapIcon = el("span", "material-symbols-outlined", "map");
+        mapsBtn.prepend(mapIcon);
+        mapsBtn.type = "button";
+        
+        // Try extracting specific venue name or address from line items (e.g. "1. Urdu Maskan - near Chowmahalla...")
+        let queryTarget = "Hyderabad community centers";
+        const lines = textContent.split("\n");
+        const venueLine = lines.find(l => /^[0-9]+\.\s+([^\-]+)\s*-\s*(.*)/.test(l.trim()));
+        if (venueLine) {
+          const match = venueLine.trim().match(/^[0-9]+\.\s+([^-\(]+)/);
+          if (match && match[1]) {
+            queryTarget = encodeURIComponent(match[1].trim() + ", Hyderabad");
+          }
+        } else if (textContent.includes("Banjara Hills")) {
+          queryTarget = encodeURIComponent("Banjara Hills, Hyderabad");
+        } else if (textContent.includes("Charminar")) {
+          queryTarget = encodeURIComponent("Charminar, Hyderabad");
+        }
+
+        mapsBtn.addEventListener("click", () => {
+          window.open(`https://www.google.com/maps/search/?api=1&query=${queryTarget}`, "_blank");
+        });
+        actions.appendChild(mapsBtn);
+      }
+
+      // Claim button with automatic listing ID extraction
+      if (textContent.toLowerCase().includes("available") || textContent.toLowerCase().includes("donation") || textContent.toLowerCase().includes("listing id")) {
+        // Extract listing ID like 'donation-3c46a6' or 'donation-[a-z0-9]+'
+        const idMatch = textContent.match(/donation-[a-z0-9]+/i);
+        const claimId = idMatch ? idMatch[0] : null;
+
+        const claimBtn = el("button", "card-action-btn", claimId ? `Claim ${claimId}` : "Claim This Item");
+        const claimIcon = el("span", "material-symbols-outlined", "volunteer_activism");
+        claimBtn.prepend(claimIcon);
+        claimBtn.type = "button";
+        claimBtn.addEventListener("click", () => {
+          if (claimId) {
+            sendMessage(`I would like to claim listing ${claimId}`);
+          } else {
+            sendMessage("I would like to claim this available donation listing.");
+          }
+        });
+        actions.appendChild(claimBtn);
+      }
+
+      // Copy info button
+      const copyBtn = el("button", "card-action-btn", "Copy Info");
+      const copyIcon = el("span", "material-symbols-outlined", "content_copy");
+      copyBtn.prepend(copyIcon);
+      copyBtn.type = "button";
+      copyBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(textContent.trim());
+        copyBtn.lastChild.textContent = " Copied!";
+        setTimeout(() => { copyBtn.lastChild.textContent = " Copy Info"; }, 2000);
+      });
+      actions.appendChild(copyBtn);
+
+      d.appendChild(actions);
+      return d;
+
+    }
+    case "Column": {
+      const d = el("div", "a2col"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Row": {
+      const d = el("div", "a2row" + (props.alignment === "spaceBetween" ? " between" : ""));
+      kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Text": {
+      const hint = props.usageHint || "body";
+      const cls = { h1:"a2text a2-h1", h2:"a2text a2-h2", h3:"a2text a2-h3", h4:"a2text a2-h4", caption:"a2text a2-caption" }[hint] || "a2text";
+      const textVal = boundStr(props.text);
+      const p = el("p", cls, textVal);
+
+      if (textVal.toLowerCase().includes("expires") || textVal.toLowerCase().includes("urgent")) {
+        const badge = el("span", "urgency-badge urgent", "Urgent / Perishable");
+        p.prepend(badge);
+        badge.style.marginRight = "0.4rem";
+      } else if (textVal.toLowerCase().includes("available")) {
+        const badge = el("span", "urgency-badge available", "Available");
+        p.prepend(badge);
+        badge.style.marginRight = "0.4rem";
+      }
+      return p;
+    }
+    case "Divider": return el("hr", "a2divider");
+    case "List": {
+      const ul = el("ul", "a2list");
+      kids().forEach(n => { const li = el("li"); li.appendChild(n); ul.appendChild(li); });
+      return ul;
+    }
+    case "Image": {
+      const url = boundStr(props.url);
+      if (!/^https?:\/\//i.test(url)) return null;
+      const img = el("img", "a2img"); img.src = url; img.alt = boundStr(props.alt) || "Image"; return img;
+    }
+    case "Icon": {
+      const icon = iconName(props.name);
+      return el("span", "material-symbols-outlined", icon);
+    }
+    default: return null;
+  }
+}
+
+function renderSurface(messages, container) {
+  const roots = [];
+  const comps = {};
+  for (const m of messages) {
+    if (m.beginRendering && typeof m.beginRendering.root === "string") roots.push(m.beginRendering.root);
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.id && c.component) comps[c.id] = c.component;
+  }
+  let rootIds = roots.filter(r => comps[r]);
+  if (rootIds.length === 0) {
+    const referenced = new Set();
+    for (const id in comps) { const spec = comps[id]; childIds(spec[Object.keys(spec)[0]] || {}).forEach(c => referenced.add(c)); }
+    rootIds = Object.keys(comps).filter(id => !referenced.has(id));
+  }
+  let drew = false;
+  for (const rid of rootIds) { const node = buildNode(rid, comps, new Set()); if (node) { container.appendChild(node); drew = true; } }
+  return drew;
+}
+
+function flattenText(messages) {
+  const out = [];
+  for (const m of messages) {
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.component && c.component.Text) out.push(boundStr(c.component.Text.text));
+  }
+  return out.join("\n").trim();
+}
+
+function renderReply(b, parts) {
+  b.textContent = "";
+  const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
+  const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
+
+  const textStr = texts.join("\n").trim();
+  if (textStr) {
+    const formattedDiv = el("div");
+    formattedDiv.innerHTML = formatMarkdown(textStr);
+    b.appendChild(formattedDiv);
+  }
+
+  if (a2ui.length) {
+    b.classList.add("rich");
+    if (!renderSurface(a2ui, b)) b.appendChild(el("div", null, flattenText(a2ui) || "(no card content)"));
+  }
+  if (!b.childNodes.length) b.textContent = "(no response)";
+  log.scrollTop = log.scrollHeight;
+}
+
+async function sendMessage(text) {
+  if (!text) return;
+  bubble("user").textContent = text;
+  input.value = "";
+  
+  // Choose contextual hint based on query content
+  let hint = "";
+  const lower = text.toLowerCase();
+  if (lower.includes("video") || lower.includes("clip") || lower.includes("animation")) {
+    hint = "Generating short video with Gemini Omni...";
+  } else if (lower.includes("image") || lower.includes("picture") || lower.includes("visualize")) {
+    hint = "Generating image preview with Imagen...";
+  } else if (lower.includes("impact") || lower.includes("calculate") || lower.includes("co2") || lower.includes("meal")) {
+    hint = "Calculating impact in sandbox...";
+  } else if (lower.includes("near") || lower.includes("place") || lower.includes("center") || lower.includes("find")) {
+    hint = "Searching nearby places on Google Maps...";
+  }
+
+
+  const b = showTypingBubble(hint);
+  try {
+    const res = await fetch("/chat", { 
+      method: "POST", 
+      headers: { "Content-Type": "application/json" }, 
+      body: JSON.stringify({ message: text, user_id: currentUserId }) 
+    });
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); }
+    catch { throw new Error(`Server returned non-JSON (HTTP ${res.status}). ${raw.slice(0, 300)}`); }
+    renderReply(b, data.parts || []);
+  } catch (e) {
+    b.textContent = "Error: " + e.message;
+  }
+}
+
+
+form.addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  sendMessage(input.value.trim());
+});
+
+document.querySelectorAll(".category-pill").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const promptText = btn.getAttribute("data-prompt");
+    if (promptText) sendMessage(promptText);
+  });
+});
+
+document.querySelectorAll(".prompt-chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const promptText = btn.getAttribute("data-prompt");
+    if (promptText) sendMessage(promptText);
+  });
+});
+
+document.getElementById("new-session-btn").addEventListener("click", () => {
+  currentUserId = "sharenest-" + Math.random().toString(36).substring(2, 9);
+  log.innerHTML = `
+    <div class="msg-row agent">
+      <div class="avatar agent">
+        ${AGENT_ICON_SVG}
+      </div>
+      <div class="msg-content-wrapper">
+
+        <div class="msg-header">
+          <span>ShareNest</span>
+          <span>•</span>
+          <span>Just now</span>
+        </div>
+        <div class="bubble">
+          Started a fresh session! What surplus items would you like to list, browse, or coordinate?
+        </div>
+      </div>
+    </div>
+  `;
+});
+</script>
+</body>
+</html>
