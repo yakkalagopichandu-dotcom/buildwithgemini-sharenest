@@ -1,0 +1,587 @@
+{
+  "parts": [
+    {
+      "kind": "a2ui",
+      "data": {
+        "surfaceUpdate": {
+          "surfaceId": "carehomes_hyderabad",
+          "components": [
+            {
+              "id": "card_carehomes",
+              "component": {
+                "Card": {
+                  "child": "column_carehomes"
+                }
+              }
+            },
+            {
+              "id": "column_carehomes",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_header"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "text_header",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Care Homes in Hyderabad"
+                  },
+                  "usageHint": "h2"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "surfaceUpdate": {
+          "surfaceId": "carehomes_hyderabad",
+          "components": [
+            {
+              "id": "column_carehomes",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_header",
+                      "card_carehome_001",
+                      "card_carehome_1e64fe",
+                      "card_carehome_3f72dd",
+                      "card_carehome_7a9ad4",
+                      "card_carehome_e5b4f9"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "card_carehome_001",
+              "component": {
+                "Card": {
+                  "child": "column_carehome_001"
+                }
+              }
+            },
+            {
+              "id": "column_carehome_001",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_name_001",
+                      "text_address_001",
+                      "text_contact_001",
+                      "text_beneficiaries_001",
+                      "text_delivery_001",
+                      "text_status_001",
+                      "text_type_001"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "text_name_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Karuna Seva Children Shelter & Orphanage"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "text_address_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Address: Road No. 10, Banjara Hills, Hyderabad, Telangana"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_contact_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Contact: Sister Mary Thomas (+91 98490 11223)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_beneficiaries_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Beneficiaries: 55 children"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_delivery_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Delivery Window: Daily 11:00 AM - 7:00 PM"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_status_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Status: VERIFIED"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_type_001",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Shelter Type: orphanage"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "card_carehome_1e64fe",
+              "component": {
+                "Card": {
+                  "child": "column_carehome_1e64fe"
+                }
+              }
+            },
+            {
+              "id": "column_carehome_1e64fe",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_name_1e64fe",
+                      "text_address_1e64fe",
+                      "text_contact_1e64fe",
+                      "text_beneficiaries_1e64fe",
+                      "text_delivery_1e64fe",
+                      "text_status_1e64fe",
+                      "text_type_1e64fe"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "text_name_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Karuna Seva Children Shelter"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "text_address_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Address: Road No. 12, Banjara Hills, Hyderabad, Telangana"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_contact_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Contact: Sister Mary Thomas (+91 98490 11223)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_beneficiaries_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Beneficiaries: 55 children"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_delivery_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Delivery Window: Daily 11:00 AM - 7:00 PM"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_status_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Status: SUBMITTED"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_type_1e64fe",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Shelter Type: orphanage"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "card_carehome_3f72dd",
+              "component": {
+                "Card": {
+                  "child": "column_carehome_3f72dd"
+                }
+              }
+            },
+            {
+              "id": "column_carehome_3f72dd",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_name_3f72dd",
+                      "text_address_3f72dd",
+                      "text_contact_3f72dd",
+                      "text_beneficiaries_3f72dd",
+                      "text_delivery_3f72dd",
+                      "text_status_3f72dd",
+                      "text_type_3f72dd"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "text_name_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Anbu Seva Orphanage & Old Age Home"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "text_address_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Address: Road No. 12, Banjara Hills, Hyderabad, Telangana"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_contact_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Contact: Sister Mary / S. Rao (+91 98765 43210)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_beneficiaries_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Beneficiaries: 45 children"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_delivery_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Delivery Window: Daily 10 AM - 6 PM"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_status_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Status: SUBMITTED"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_type_3f72dd",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Shelter Type: orphanage"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "card_carehome_7a9ad4",
+              "component": {
+                "Card": {
+                  "child": "column_carehome_7a9ad4"
+                }
+              }
+            },
+            {
+              "id": "column_carehome_7a9ad4",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_name_7a9ad4",
+                      "text_address_7a9ad4",
+                      "text_contact_7a9ad4",
+                      "text_beneficiaries_7a9ad4",
+                      "text_delivery_7a9ad4",
+                      "text_status_7a9ad4",
+                      "text_type_7a9ad4"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "text_name_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Prerana Children Orphanage"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "text_address_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Address: Madhapur, Hyderabad"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_contact_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Contact: Ramesh Kumar (+91 99887 76655)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_beneficiaries_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Beneficiaries: 38 children"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_delivery_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Delivery Window: Daily 11 AM - 5 PM"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_status_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Status: VERIFIED"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_type_7a9ad4",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Shelter Type: orphanage"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "card_carehome_e5b4f9",
+              "component": {
+                "Card": {
+                  "child": "column_carehome_e5b4f9"
+                }
+              }
+            },
+            {
+              "id": "column_carehome_e5b4f9",
+              "component": {
+                "Column": {
+                  "children": {
+                    "explicitList": [
+                      "text_name_e5b4f9",
+                      "text_address_e5b4f9",
+                      "text_contact_e5b4f9",
+                      "text_beneficiaries_e5b4f9",
+                      "text_delivery_e5b4f9",
+                      "text_status_e5b4f9",
+                      "text_type_e5b4f9"
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              "id": "text_name_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Karuna Seva Children Shelter"
+                  },
+                  "usageHint": "h3"
+                }
+              }
+            },
+            {
+              "id": "text_address_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Address: Road No. 12, Banjara Hills, Hyderabad, Telangana"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_contact_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Contact: Sister Mary Thomas (+91 98490 11223)"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_beneficiaries_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Beneficiaries: 55 children"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_delivery_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Delivery Window: Daily 11:00 AM - 7:00 PM"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_status_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Status: SUBMITTED"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            },
+            {
+              "id": "text_type_e5b4f9",
+              "component": {
+                "Text": {
+                  "text": {
+                    "literalString": "Shelter Type: orphanage"
+                  },
+                  "usageHint": "body"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

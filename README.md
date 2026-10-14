@@ -1,87 +1,97 @@
 # ShareNest (Community Share & Rescue)
 
-An autonomous AI matchmaking agent built on Google's Agent Development Kit (ADK) that connects community donors listing surplus food, clothing, toys, and essentials with local shelters and volunteers who can browse, claim, and coordinate pickups across India.
+An autonomous AI matchmaking and community rescue application built with Google's Agent Development Kit (ADK) and Gemini. ShareNest connects food donors (restaurants, wedding caters, community kitchens) and essential item donors with verified care homes, orphanages, and night shelters across India.
 
-![ShareNest Demo](docs/assets/sharenest_demo.gif)
+![ShareNest Demo](docs/assets/demo.gif)
 
 ---
 
 ## What the Agent Actually Does
 
-ShareNest is an agent with direct integrations into Google Cloud services and the Gemini model family. It supports conversational multi-turn flows, persistent long-term user memory, database lookups, visual generation, code sandboxing, and A2UI card interfaces.
+ShareNest is powered by an autonomous ADK Agent deployed on **Google Cloud Agent Runtime** and served via FastAPI. The agent integrates directly with Google Cloud services to manage surplus donations, perform long-term memory lookups, execute code in sandboxes, and render interactive card surfaces.
 
-### Implemented Capabilities
+### Real Implemented Tools & Capabilities
 
-1. **Surplus Listings Management (Firestore Database)**
-   - `list_donations`: Queries the active `donations` collection in Firestore, filtered by status (`available`), category (`food`, `clothes`, `toys`, `essentials`), and location.
-   - `get_donation_details`: Retrieves comprehensive listing information, item shelf-life, and pickup instructions for any listing ID.
-   - `create_donation`: Records new community donations directly into Firestore with auto-generated IDs, timestamps, contact info, and pickup windows.
-   - `claim_donation`: Reserves a listing for a shelter or volunteer, marking the Firestore document status as `claimed`.
+The codebase implements and exposes the following tools (`app/tools.py` and `backend/agent/tools.py`):
 
-2. **Cross-Session Donor & Volunteer Memory (Vertex AI Memory Bank)**
-   - Powered by Vertex AI Reasoning Engine's managed Memory Bank.
-   - `PreloadMemoryTool`: Automatically retrieves donor/volunteer preferences, home neighborhoods, vehicle capacity, dietary restrictions, and past donation history at the start of conversations.
-   - `generate_memories_callback`: Runs asynchronously after each conversation turn to distill and persist salient user facts across separate chat sessions.
+1. **Surplus Listings Management (Cloud Firestore)**
+   - `list_donations`: Queries live surplus listings from the `donations` Firestore collection with filters for category (`Food`, `Clothes`, `Toys`, `Essentials`), status (`available`, `claimed`), and urgency (`urgent`, `high`, `medium`, `low`).
+   - `get_donation_details`: Fetches full details, pickup windows, notes, and handover codes for a specific donation ID.
+   - `create_donation`: Persists new surplus listings to Firestore with handover PINs, location metadata, and urgency classification.
+   - `claim_donation`: Reserves a listing for a verified care home or volunteer shelter representative, transitioning status to `claimed` and generating an audit trail.
 
-3. **Visual Verification & Previews (Imagen on Vertex AI + Cloud Storage)**
-   - `generate_item_image`: Uses `imagen-3.0-generate-002` to synthesize photorealistic verification images of donated items (e.g., packaged meal trays, clothing bundles).
-   - Automatically uploads generated image bytes to a public Google Cloud Storage bucket (`sharenest-donations-qwiklabs-04-f3ca`) and serves public HTTPS URLs.
+2. **Verified Care Homes & Shelters Directory (Cloud Firestore)**
+   - `list_care_homes_info`: Queries verified care homes, orphanages, and old age homes across Hyderabad and major Indian cities, returning contact persons, phone numbers, and child/resident beneficiary counts.
+   - `find_nearby_places`: Identifies verified care homes and distribution centers within proximity of given coordinates.
 
-4. **Short Video Generation (Gemini Omni Preview + Cloud Storage)**
-   - `generate_item_video`: Generates short visual video clips for donated items using `gemini-omni-flash-preview` in the `global` region.
-   - Saves artifacts to the agent's session context via `tool_context.save_artifact` and uploads video bytes directly to Google Cloud Storage.
+3. **Cross-Session Long-Term Memory (Vertex AI Memory Bank)**
+   - `PreloadMemoryTool`: Automatically loads user profile context (recurring drop-off locations, contact details, vehicle capacity, dietary restrictions, and stated allergies) into the prompt context at the start of a conversation.
+   - `generate_memories_callback`: An asynchronous `after_agent_callback` that writes session turns back to Vertex AI Memory Bank for autonomous extraction and persistence across sessions.
 
-5. **Impact & Waste Diversion Analytics (Built-in Python Code Sandbox)**
-   - `estimate_donation_impact`: Uses Gemini's built-in Python code execution sandbox (`code_executor`) to calculate logistics and environmental metrics (meals served, kg of CO₂ emissions prevented, and landfill diversion equivalents).
+4. **Visual Item Previews (Vertex AI Imagen + Cloud Storage)**
+   - `generate_item_image`: Invokes Gemini / Imagen on Vertex AI in the global region to generate visual preview illustrations of donation packages, saves artifacts to session context (`tool_context.save_artifact`), and uploads image bytes directly to a Google Cloud Storage bucket (`sharenest-donations-qwiklabs-04-f3ca`), returning public HTTPS URLs.
 
-6. **Location Geocoding & Community Centers Lookup (Google Places / Nominatim)**
-   - `geocode_address`: Converts donor addresses into latitude/longitude coordinates.
-   - `find_nearby_places`: Discovers verified nearby food banks, community relief shelters, and drop-off hubs around target cities (e.g., Hyderabad, Bengaluru).
+5. **Impact & Waste Diversion Analytics (Agent Engine Sandbox Code Execution)**
+   - `estimate_donation_impact`: Calculates meals provided, textile waste diverted, and $\text{CO}_2$ emissions avoided in kilograms.
+   - `AgentEngineSandboxCodeExecutor`: ADK code executor wired up to a remote Reasoning Engine sandbox environment (`projects/546884461112/locations/us-east1/reasoningEngines/...`) to safely execute Python computations for complex waste calculations and simulation routines.
 
-7. **Rich Card UI Rendering (A2UI)**
-   - Uses an `after_model_callback` (`a2ui_callback`) that translates Gemini's raw responses into structured A2UI surfaces (`Card`, `Column`, `Row`, `Text`, `Image`).
-   - Renders urgency badges (*Urgent / Perishable*), direct *Claim* triggers, and Google Maps lookup links.
+6. **Interactive Visual Cards (A2UI)**
+   - `a2ui_callback`: An `after_model_callback` that parses and normalizes the Agent's structured UI output into standard A2UI component schemas (`Card`, `Column`, `Row`, `Text`, `Image`).
+   - Renders interactive status badges, pickup schedules, and contact cards directly inside the web chat window.
 
 ---
 
 ## Google Cloud Services Wired Up
 
-| Service | Purpose in ShareNest |
-| :--- | :--- |
-| **Vertex AI Agent Runtime (ADK)** | Hosts the core reasoning engine (`root_agent` on `gemini-2.5-flash`). |
-| **Vertex AI Memory Bank** | Manages long-term conversational memory across user sessions. |
-| **Google Cloud Firestore** | NoSQL database storing live donation records, statuses, and pickup metadata. |
-| **Google Cloud Storage (GCS)** | Public bucket hosting generated preview images and demonstration media. |
-| **Vertex AI Imagen (`imagen-3.0-generate-002`)** | Generates photorealistic item verification cards. |
-| **Gemini Omni (`gemini-omni-flash-preview`)** | Synthesizes short promotional and verification item video clips. |
-| **Gemini Built-in Code Execution** | Secure sandbox executing dynamic Python code for impact calculations. |
+Based directly on `agents-cli-manifest.yaml`, `app/`, and `backend/`:
+
+| Google Cloud Service | Role in ShareNest | Configuration / Resource |
+| :--- | :--- | :--- |
+| **Agent Engine / Agent Runtime (ADK)** | Autonomous agent orchestration & A2A protocol communication | Base template `adk`, deployed via `agents-cli` in `us-east1` |
+| **Gemini on Vertex AI** | Foundation reasoning model for chat turns and intent routing | `gemini-2.5-flash` / `gemini-3.8-flash` with automatic retries |
+| **Vertex AI Memory Bank** | Persistent cross-session facts, preferences, and allergy memory | Wired via `PreloadMemoryTool` and `add_session_to_memory` |
+| **Agent Engine Sandbox** | Isolated remote Python execution sandbox for math & data analysis | Reasoning Engine Sandbox in `us-east1` |
+| **Cloud Firestore** | Production document database for donations, care homes, and claims | Native mode collections: `donations`, `care_homes`, `claims` |
+| **Cloud Storage (GCS)** | Public storage for donation media and generated visual assets | Bucket: `gs://sharenest-donations-qwiklabs-04-f3ca/` |
+| **Vertex AI Imagen** | Generative image previews for surplus donations | Vertex AI image generation API |
 
 ---
 
-## Planned / Not Yet Implemented
+## Project Status & Non-Implemented Features
 
-- **`verify_item_guidelines` tool**: Automated multimodal food-safety guideline verification from donor-uploaded inspection photos (*planned, not yet implemented*).
-- **Real-time SMS/WhatsApp Pickup Alerts**: Direct webhook notifications sent to donors when a shelter volunteer confirms a claim (*planned, not yet implemented*).
+To ensure complete transparency regarding the codebase:
+
+- **Implemented**: Full surplus food & supplies registry, verified care homes lookup tool, A2UI visual cards, Firestore database operations, Vertex AI Memory Bank callbacks, GCS asset uploads, and arrival quality inspection modal with photo/comments proofing.
+- **Planned, Not Yet Implemented**:
+  - `verify_item_guidelines`: Automated multimodal AI acceptance from camera photos (*currently an advisory placeholder; physical inspection by care homes remains mandatory*).
+  - WhatsApp / SMS Twilio integration for automated pickup dispatch notifications.
 
 ---
 
 ## Local Setup & Run Instructions
 
-### Prerequisites
+Follow these steps to run the agent and the application locally on your machine.
+
+### 1. Prerequisites
 
 - Python 3.10+
-- Google Cloud CLI (`gcloud`) installed and configured
-- An active GCP project with Vertex AI, Firestore, and Cloud Storage APIs enabled
+- Node.js 18+ & npm
+- Google Cloud SDK (`gcloud`) installed
+- A Google Cloud Project with Vertex AI, Firestore, and Cloud Storage enabled
 
-### 1. Authenticate with Google Cloud
+### 2. Google Cloud Authentication
+
+Authenticate your local terminal to access Google Cloud services:
 
 ```bash
 gcloud auth login
 gcloud auth application-default login
-gcloud config set project YOUR_GCP_PROJECT_ID
+gcloud config set project YOUR_PROJECT_ID
 ```
 
-### 2. Install Dependencies
+### 3. Backend & Agent Setup
+
+Create a Python virtual environment and install the required dependencies:
 
 ```bash
 cd sharenest
@@ -90,24 +100,38 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Run the Agent Locally (ADK Web Dev UI)
+Set the necessary environment variables (or create a `.env` file):
 
-To test the agent directly with ADK's built-in playground:
+```bash
+export GCP_PROJECT_ID="YOUR_PROJECT_ID"
+export GCS_BUCKET_NAME="YOUR_BUCKET_NAME"
+```
+
+To run the agent in the ADK interactive developer UI:
 
 ```bash
 adk web app
 ```
 
-Open the local browser interface shown in the terminal (defaults to port `8501`).
-
-### 4. Run the ShareNest Full-Stack Frontend Proxy
-
-To launch the full web chat application with A2UI rendering and Google Maps integration:
+To run the FastAPI production server (which serves the API and the embedded frontend):
 
 ```bash
-cd frontend
-pip install -r requirements.txt
-python main.py
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8080 --reload
 ```
 
-The application will start on the local server at `http://127.0.0.1:8080`.
+### 4. Frontend Application (React + Vite)
+
+If you wish to run or develop the frontend separately with live reloading:
+
+```bash
+cd frontend-app
+npm install
+npm run dev
+```
+
+To build the frontend and copy production assets into the backend static directory:
+
+```bash
+npm run build
+cp -r dist/* ../backend/static_dist/
+```

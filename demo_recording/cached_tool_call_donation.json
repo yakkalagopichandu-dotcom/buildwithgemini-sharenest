@@ -1,0 +1,61 @@
+{
+  "parts": [
+    {
+      "kind": "text",
+      "text": "Chef Vikram, I have recorded your surplus donation in the ShareNest registry and dispatched real-time alerts to nearby verified care homes in Hitec City & Banjara Hills!"
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "Card": {
+          "Column": {
+            "children": [
+              {
+                "Text": {
+                  "text": "\u2705 Surplus Food Donation Registered",
+                  "usageHint": "h3"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Donor: Chef Vikram (Novotel Hitec City Hyderabad)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Contact: +91 98490 55443",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Items: 45 Fresh Vegetarian Biryani Meal Boxes",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Pickup Window: Today 6:00 PM - 8:00 PM",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Status: AVAILABLE (Urgent Pickup)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Matched Care Home: Karuna Seva Children Shelter (Banjara Hills)",
+                  "usageHint": "body"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profile matching UID
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Care Homes: Anyone can read verified care homes; admins can read/write all
+    match /careHomes/{homeId} {
+      allow read: if true;
+      allow create, update: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.token.role == 'ADMIN';
+    }
+    
+    // Donations: Anyone can view active listings; donors create; verified care homes claim
+    match /donations/{donationId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null;
+    }
+    
+    // Claims and inspection records
+    match /claims/{claimId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Needs lists
+    match /needs/{needId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Audit Log is append-only by authenticated backend/agents
+    match /auditLog/{logId} {
+      allow read: if request.auth != null && request.auth.token.role == 'ADMIN';
+      allow create: if request.auth != null;
+      allow update, delete: if false;
+    }
+  }
+}

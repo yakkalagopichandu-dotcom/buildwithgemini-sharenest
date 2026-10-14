@@ -1,0 +1,22 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "donations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "category", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "careHomes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -1,0 +1,269 @@
+{
+  "parts": [
+    {
+      "kind": "a2ui",
+      "data": {
+        "Card": {
+          "Column": {
+            "children": [
+              {
+                "Text": {
+                  "text": "Karuna Seva Children Shelter & Orphanage",
+                  "usageHint": "h3"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Address: Road No. 10, Banjara Hills, Hyderabad, Telangana",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Contact: Sister Mary Thomas (+91 98490 11223)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Beneficiaries: 55 children",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Delivery Window: Daily 11:00 AM - 7:00 PM",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Status: VERIFIED",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Shelter Type: orphanage",
+                  "usageHint": "body"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "Card": {
+          "Column": {
+            "children": [
+              {
+                "Text": {
+                  "text": "Karuna Seva Children Shelter",
+                  "usageHint": "h3"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Address: Road No. 12, Banjara Hills, Hyderabad, Telangana",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Contact: Sister Mary Thomas (+91 98490 11223)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Beneficiaries: 55 children",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Delivery Window: Daily 11:00 AM - 7:00 PM",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Status: SUBMITTED",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Shelter Type: orphanage",
+                  "usageHint": "body"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "Card": {
+          "Column": {
+            "children": [
+              {
+                "Text": {
+                  "text": "Anbu Seva Orphanage & Old Age Home",
+                  "usageHint": "h3"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Address: Road No. 12, Banjara Hills, Hyderabad, Telangana",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Contact: Sister Mary / S. Rao (+91 98765 43210)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Beneficiaries: 45 children",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Delivery Window: Daily 10 AM - 6 PM",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Status: SUBMITTED",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Shelter Type: orphanage",
+                  "usageHint": "body"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "Card": {
+          "Column": {
+            "children": [
+              {
+                "Text": {
+                  "text": "Prerana Children Orphanage",
+                  "usageHint": "h3"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Address: Madhapur, Hyderabad",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Contact: Ramesh Kumar (+91 99887 76655)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Beneficiaries: 38 children",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Delivery Window: Daily 11 AM - 5 PM",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Status: VERIFIED",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Shelter Type: orphanage",
+                  "usageHint": "body"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "kind": "a2ui",
+      "data": {
+        "Card": {
+          "Column": {
+            "children": [
+              {
+                "Text": {
+                  "text": "Karuna Seva Children Shelter",
+                  "usageHint": "h3"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Address: Road No. 12, Banjara Hills, Hyderabad, Telangana",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Contact: Sister Mary Thomas (+91 98490 11223)",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Beneficiaries: 55 children",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Delivery Window: Daily 11:00 AM - 7:00 PM",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Status: SUBMITTED",
+                  "usageHint": "body"
+                }
+              },
+              {
+                "Text": {
+                  "text": "Shelter Type: orphanage",
+                  "usageHint": "body"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

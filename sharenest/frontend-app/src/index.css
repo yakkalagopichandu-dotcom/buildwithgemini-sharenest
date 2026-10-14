@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@keyframes floatMascot {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(1deg); }
+}
+
+.animate-mascot {
+  animation: floatMascot 4s ease-in-out infinite;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUpFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
